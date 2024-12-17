@@ -1,0 +1,33 @@
+.zippy-pagination {
+    display: flex;
+    margin-top: 1.5rem;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    .prev-btn, .next-btn {
+        padding: 5px 15px;
+        background: #f8f7f7;
+        border-radius: 3px;
+        &:hover {
+            background-color: #7F7DF3;
+            color: #FFF !important;
+            font-weight: 600;
+        }
+    }
+    .zippy-page-link {
+        padding: 4px 10px;
+        background-color: #f8f7f7;
+        border-radius: 3px;
+        &.active {
+            background-color: #7F7DF3;
+            color: #FFF !important;
+            font-weight: 600;
+        }
+        &:hover {
+            background-color: #7F7DF3;
+            color: #FFF !important;
+            font-weight: 600;
+        }
+        
+    }
+}
