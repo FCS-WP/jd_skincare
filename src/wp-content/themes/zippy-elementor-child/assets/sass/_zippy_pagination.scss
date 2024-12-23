@@ -4,6 +4,7 @@
     gap: 8px;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
     .prev-btn, .next-btn {
         padding: 5px 15px;
         background: #f8f7f7;
@@ -29,5 +30,34 @@
             font-weight: 600;
         }
         
+    }
+    a {
+        &.prev, &.next {
+            padding: 5px 15px;
+            background: #f8f7f7;
+            border-radius: 3px;
+            &:hover {
+                background-color: #7F7DF3;
+                color: #FFF !important;
+            }
+        }
+        &.page-numbers {
+            padding: 4px 10px;
+            background-color: #f8f7f7;
+            border-radius: 3px;
+            &:hover {
+                background-color: #7F7DF3;
+                color: #FFF !important;
+                font-weight: 600;
+            }
+        }
+        
+    }
+    .page-numbers.current {
+        background-color: #7F7DF3;
+        color: #FFF !important;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 3px;
     }
 }
