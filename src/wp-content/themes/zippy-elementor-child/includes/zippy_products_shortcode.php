@@ -15,7 +15,7 @@ function products_by_category_shortcode($atts)
     $limit = intval($atts['limit']);
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $price_filter = isset($_GET['min_price']) || isset($_GET['max_price']);
-    $stock_filter = isset($_GET['is_in_stock']) ? floatval($_GET['is_in_stock']) : 2;
+    $stock_filter = isset($_GET['filter_stock_status']) ? $_GET['filter_stock_status'] : '';
     
     if (empty($category_slug)) {
         return '<p>Missing Slug.</p>';
@@ -53,10 +53,10 @@ function products_by_category_shortcode($atts)
         );
     }
 
-    if ($stock_filter < 2) {
+    if ($stock_filter) {
         $args['meta_query'][] =  array(
             'key' => '_stock_status',
-            'value' => $stock_filter == 0 ? 'outofstock' : 'instock',
+            'value' => $stock_filter,
             'compare' => '=',
         );
     }
@@ -69,44 +69,6 @@ function products_by_category_shortcode($atts)
 
     ob_start();
 
-    ?> 
-    <div class="zippy-sort-and-filters">
-        <div class="custom-dropdown filter-box">
-            <div class="custom-filter">
-                <button class="filter-button dropdown-btn" role="button" for="Filter">Filter</button>
-            </div>
-            <div class="dropdown-area" style="display: none;">
-                <form class="filter-form" action="" method="GET">
-                    <div class="filter-item">
-                        <h6>Filter by price :</h6>
-                        <div class="filter-value">
-                            <label class="input-label" for="min_price">Min Price:</label>
-                            <input type="number" name="min_price" id="min_price" placeholder="Min Price" value="<?php echo(!empty($_GET['min_price']) ? floatval( $_GET['min_price']) : '') ?>"/>
-                            <label class="input-label" for="max_price">Max Price:</label>
-                            <input type="number" name="max_price" id="max_price" placeholder="Max Price" value="<?php echo(!empty($_GET['max_price']) ? floatval( $_GET['max_price']) : '') ?>"/>
-                        </div>
-                    </div>
-                    <div class="filter-item">
-                        <h6>Filter by stock</h6>
-                        <div class="filter-value">
-                            <label class="input-label" for="is_in_stock">Select Type:</label>
-                            <select name="is_in_stock" id="is_in_stock">
-                                <option value="2" <?php echo((!empty($_GET['is_in_stock']) && $_GET['is_in_stock'] == '2') ? 'selected' : '') ?>>All</option>
-                                <option value="1"<?php echo((!empty($_GET['is_in_stock']) && $_GET['is_in_stock'] == '1') ? 'selected' : '') ?>>In Stock</option>
-                                <option value="0"<?php echo((!empty($_GET['is_in_stock']) && $_GET['is_in_stock'] == '0') ? 'selected' : '') ?>>Out Of Stock</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="filter-button">
-                        <button id="submit-filter">Filter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <?php
-
     echo '<div class="zippy-products-container">';
     
     while ($query->have_posts()) {
@@ -118,7 +80,8 @@ function products_by_category_shortcode($atts)
         <div class="zippy-product-item">
             <a href="<?php echo get_permalink(); ?>">
                 <div class="product-thumbnail">
-                    <img class="<?php if ($atts['contain'] != 0) echo 'img-contain' ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
+                    
+                    <img class="<?php if ($atts['contain'] != 0) echo 'img-contain' ?>" src="<?php echo !empty($thumbnail_url) ? esc_url($thumbnail_url) : esc_url(wc_placeholder_img_src()) ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
                 </div>
                 <div class="product-infos">
                     <h3 class="product-title"> <?php echo get_the_title() ?> </h3>
@@ -180,6 +143,48 @@ function products_by_category_shortcode($atts)
 }
 add_shortcode('zippy_products_by_cat', 'products_by_category_shortcode');
 
+function zippy_custom_filter()
+{ 
+    ?> 
+        <div class="zippy-sort-and-filters">
+            <div class="custom-dropdown filter-box">
+                <div class="custom-filter">
+                    <button class="filter-button dropdown-btn" role="button" for="Filter">Filter</button>
+                </div>
+                <div class="dropdown-area" style="display: none;">
+                    <form class="filter-form" action="" method="GET">
+                        <div class="filter-item">
+                            <h6>Filter by price :</h6>
+                            <div class="filter-value">
+                                <label class="input-label" for="min_price">Min Price:</label>
+                                <input type="number" name="min_price" id="min_price" placeholder="Min Price" value="<?php echo(!empty($_GET['min_price']) ? floatval( $_GET['min_price']) : '') ?>"/>
+                                <label class="input-label" for="max_price">Max Price:</label>
+                                <input type="number" name="max_price" id="max_price" placeholder="Max Price" value="<?php echo(!empty($_GET['max_price']) ? floatval( $_GET['max_price']) : '') ?>"/>
+                            </div>
+                        </div>
+                        <div class="filter-item">
+                            <h6>Filter by stock</h6>
+                            <div class="filter-value">
+                                <label class="input-label" for="is_in_stock">Select Type:</label>
+                                <select name="is_in_stock" id="is_in_stock">
+                                    <option value="" <?php echo((!empty($_GET['filter_stock_status']) && $_GET['filter_stock_status'] == '') ? 'selected' : '') ?>>All</option>
+                                    <option value="instock"<?php echo((!empty($_GET['filter_stock_status']) && $_GET['filter_stock_status'] == 'instock') ? 'selected' : '') ?>>In Stock</option>
+                                    <option value="outofstock"<?php echo((!empty($_GET['filter_stock_status']) && $_GET['filter_stock_status'] == 'outofstock') ? 'selected' : '') ?>>Out Of Stock</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="filter-button">
+                            <button id="submit-filter">Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <?php
+}
+
+add_shortcode('zippy_custom_filter', 'zippy_custom_filter');
+
 
 function zippy_products_pagination()
 {
@@ -218,7 +223,7 @@ function zippy_products_pagination()
             <div class="zippy-product-item">
                 <a href="<?php echo get_permalink(); ?>">
                     <div class="product-thumbnail">
-                        <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
+                        <img src="<?php echo !empty($thumbnail_url) ? esc_url($thumbnail_url) : esc_url(wc_placeholder_img_src()) ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
                     </div>
                     <div class="product-infos">
                         <h3 class="product-title"><?php echo get_the_title(); ?></h3>

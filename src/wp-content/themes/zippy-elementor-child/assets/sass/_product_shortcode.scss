@@ -6,7 +6,7 @@
     justify-content: center;
 
     .zippy-product-item {
-        width: 28%;
+        width: 31%;
         max-width: 380px;
         background: #F8F7F8;
         position: relative;
@@ -74,6 +74,14 @@
         }
     }
    
+}
+
+@media(max-width: 1200px) {
+    .zippy-products-container {
+        .zippy-product-item{
+            width: 45%;
+        }
+    }
 }
 
 @media(max-width: 768px) {
