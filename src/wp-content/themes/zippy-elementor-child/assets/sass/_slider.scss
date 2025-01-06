@@ -1,0 +1,95 @@
+.project-slide {
+    overflow: hidden;
+}
+.slide-item {
+    position: relative;
+    width: 100%;
+    height: 90vh !important;
+    .card-info {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .content-box {
+        margin-left: 11%;
+        padding: 40px 60px;
+        width: 550px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        max-height: 650px;
+        background-color: hsla(0,0%,100%,.8);
+        .box-header {
+            text-align: end;
+            span {
+                font-size: 20px;
+                font-weight: 600;
+            }
+        }
+        .box-body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            .content-title {
+                font-size: 34px;
+                color: #B9133B;
+            }
+            .content-description {
+                font-size: 14px;
+            }
+            .action-button {
+                padding: 10px 20px;
+                font-weight: 500;
+                background-color: #B9133B;
+                color: #FFF;
+                border-radius: 0;
+                text-wrap: auto;
+            }
+        }
+        .box-footer {
+            text-align: end;
+            .custom-prev-btn,
+            .custom-next-btn {
+                width: 60px;
+                border: 0;
+                padding: 0;
+                &:hover {
+                    color: white;
+                    background: none;
+                    img {
+                        transform: scale(1.08);
+                        fill: #ca3558;
+                    }
+                }
+            }
+            .custom-prev-btn,
+            .custom-next-btn img {
+                fill: #B9133B;
+                transition: fill 0.3s ease;
+                &:hover {
+                    fill: #FFF;
+                }   
+            }
+        }
+    }
+}
+@media (max-width: 768px) {
+    .slide-item {
+        height: 400px !important;
+        .content-box {
+            width: 100%;
+            margin: 8%;
+            .box-footer {
+                .custom-prev-btn,
+                .custom-next-btn {
+                    width: 40px;
+                }
+            }
+        }
+    }
+}
+.item-background {
+    background-size: cover;
+    background-position: center center;
+}
