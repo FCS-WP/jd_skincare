@@ -1,0 +1,8 @@
+.hide-default-link {
+    a {
+        display: none !important;
+        &.display-url {
+            display: block !important;
+        }
+    }
+}
