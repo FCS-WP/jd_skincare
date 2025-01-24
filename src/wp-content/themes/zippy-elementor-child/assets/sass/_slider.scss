@@ -1,10 +1,11 @@
 .project-slide {
     overflow: hidden;
 }
+
 .slide-item {
     position: relative;
     width: 100%;
-    height: 90vh !important;
+    height: 768px !important;
     .card-info {
         height: 100%;
         display: flex;
@@ -74,6 +75,7 @@
         }
     }
 }
+
 @media (max-width: 768px) {
     .slide-item {
         height: 400px !important;
