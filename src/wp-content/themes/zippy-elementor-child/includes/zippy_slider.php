@@ -33,41 +33,66 @@ function home_slider_shortcode($atts)
         return '<p>No images found in the gallery.</p>';
     }
     $icon_url = THEME_URL . '-child' . '/assets/icons/';
-    $totalSlide = count($banner_sliders);  
-    
+    $totalSlide = count($banner_sliders);
+
     echo '<div class="project-slide position-relative">';
-            foreach ($banner_sliders as $key => $slider) {
-                ?>
-                <div class="slide-item item-background" style="background-image: url('<?php echo $slider['background']['url'] ?>');">
-                    <div class="card-info">
-                        <div class="content-box">
-                            <div class="box-header">
-                                <span><?php echo ($key + 1 . '/' . $totalSlide )?></span>
-                            </div>
-                            <div class="box-body">
-                                <div>
-                                    <h2 class="content-title"><?php echo $slider['title'] ?></h2>
-                                    <p class="content-description"><?php echo $slider['description'] ?></p>
-                                </div>
-                                <div>
-                                    <a href="<?php echo $slider['link_to'] ?>" title="<?php echo $slider['title'] ?>">
-                                        <button class="action-button"><?php echo $slider['button_text'] ?></button>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="box-footer">
-                                <button class="custom-prev-btn">
-                                    <img src="<?php echo $icon_url. 'prev.svg' ?>" alt="Prev" />
-                                </button>
-                                <button class="custom-next-btn">
-                                    <img src="<?php echo $icon_url. 'next.svg' ?>" alt="Next" />
-                                </button>
-                            </div>
+    foreach ($banner_sliders as $key => $slider) {
+?>
+        <div class="slide-item item-background" style="background-image: url('<?php echo $slider['background']['url'] ?>');">
+            <div class="card-info">
+                <div class="content-box">
+                    <div class="box-header">
+                        <span><?php echo ($key + 1 . '/' . $totalSlide) ?></span>
+                    </div>
+                    <div class="box-body">
+                        <div>
+                            <h2 class="content-title"><?php echo $slider['title'] ?></h2>
+                            <p class="content-description"><?php echo $slider['description'] ?></p>
+                        </div>
+                        <div>
+                            <a href="<?php echo $slider['link_to'] ?>" title="<?php echo $slider['title'] ?>">
+                                <button class="action-button"><?php echo $slider['button_text'] ?></button>
+                            </a>
                         </div>
                     </div>
+                    <div class="box-footer">
+                        <button class="custom-prev-btn">
+                            <img src="<?php echo $icon_url . 'prev.svg' ?>" alt="Prev" />
+                        </button>
+                        <button class="custom-next-btn">
+                            <img src="<?php echo $icon_url . 'next.svg' ?>" alt="Next" />
+                        </button>
+                    </div>
                 </div>
-                <?php
-            }
+            </div>
+        </div>
+
+        <div class="mobile-slide-item">
+            <div class="box-img">
+                <img class="slide-img" src="<?php echo $slider['background']['url'] ?>" alt="slide-image">
+            </div>
+            <div class="mobile-content-box">
+                <h2 class="content-title"><?php echo $slider['title'] ?></h2>
+                <p class="content-description"><?php echo $slider['description'] ?></p>
+                <div class="group-btns">
+                    <div>
+                        <a href="<?php echo $slider['link_to'] ?>" title="<?php echo $slider['title'] ?>">
+                            <button class="action-button"><?php echo $slider['button_text'] ?></button>
+                        </a>
+                    </div>
+                    <div class="slide-control">
+                        <button class="custom-prev-btn">
+                            <img src="<?php echo $icon_url . 'prev.svg' ?>" alt="Prev" />
+                        </button>
+                        <button class="custom-next-btn">
+                            <img src="<?php echo $icon_url . 'next.svg' ?>" alt="Next" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<?php
+    }
     echo '</div>';
 }
 
