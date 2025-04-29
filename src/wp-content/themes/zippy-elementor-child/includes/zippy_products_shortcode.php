@@ -342,15 +342,24 @@ function get_services_by_slug($atts)
     echo '<div class="zippy-products-container">';
     while ($query->have_posts()) {
         $query->the_post();
+        $post = get_post();
         $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+        $treatment_time = get_field('treatment_time') ?? '';
+        $icon_url = THEME_URL . '-child' . '/assets/icons/';
         ?>
         <div class="zippy-product-item">
             <a href="<?php echo get_permalink(); ?>">
                 <div class="product-thumbnail">
-                    <img class="<?php if ($atts['contain'] != 0) echo 'img-contain' ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
+                    <img class="thumbnail-image <?php if ($atts['contain'] != 0) echo 'img-contain' ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
+                    <?php if (!empty($treatment_time)) : ?>
+                        <span class="treatment-time"> <img class="thumbnail-icon" src="<?php echo $icon_url . 'clock-stand-svgrepo-com.svg' ?>" alt=""> <?php echo $treatment_time ?></span>
+                    <?php endif ?>
                 </div>
                 <div class="product-infos">
                     <h3 class="product-title"> <?php echo get_the_title() ?> </h3>
+                    <?php if (!empty($post->post_excerpt)) : ?>
+                        <p class="product-desc"> <?php echo esc_html($post->post_excerpt) ?> </p>
+                    <?php endif ?>
                 </div>
             </a>
         </div>
