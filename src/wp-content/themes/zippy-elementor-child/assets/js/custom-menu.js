@@ -20,4 +20,15 @@ $(function(){
         $('.child-box.child-2').hide();
         childElement.show();
     })
+        document.addEventListener("DOMContentLoaded", function() {
+        window.addEventListener('load', function() {
+            const loaderWrapper = document.getElementById('loader-wrapper');
+            if (loaderWrapper) {
+                loaderWrapper.style.opacity = '0';
+                setTimeout(() => {
+                    loaderWrapper.style.display = 'none';
+                }, 500);
+            }
+        });
+    });
 })
