@@ -304,6 +304,7 @@ function get_services_by_slug($atts)
         'category' => '',
         'limit' => 12,
         'contain' => 0,
+        'exclude-current' => 'false',
         'paged' => 1,
     ), $atts, 'get_services_by_slug');
 
@@ -311,7 +312,7 @@ function get_services_by_slug($atts)
     $category_slug = sanitize_text_field($atts['category']);
     $limit = intval($atts['limit']);
     $paged = intval($atts['paged']);
-
+    $exclude_current_post = $atts['exclude-current'];
 
     if (empty($category_slug)) {
         return '<p>Missing Slug.</p>';
@@ -331,6 +332,11 @@ function get_services_by_slug($atts)
             ),
         ),
     );
+    
+    if ($exclude_current_post === 'true' && is_singular()) {
+        $args['post__not_in'] = array(get_the_ID());
+    }
+
     $query = new WP_Query($args);
 
     if (!$query->have_posts()) {

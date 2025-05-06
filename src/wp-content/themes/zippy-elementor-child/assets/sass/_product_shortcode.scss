@@ -271,3 +271,30 @@
         }
     }
 }
+
+.related-services {
+    .zippy-products-container {
+        justify-content: flex-start;
+        .zippy-product-item {
+            width: 23%;
+        }
+    }
+
+    @media(max-width: 1200px) {
+        .zippy-products-container {
+            justify-content: flex-start;
+            .zippy-product-item {
+                width: 30%;
+            }
+        }
+    }
+    
+    @media(max-width: 768px) {
+        .zippy-products-container {
+            justify-content: center;
+            .zippy-product-item {
+                width: 100%;
+            }
+        }
+    }
+}
