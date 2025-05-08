@@ -324,6 +324,8 @@ function get_services_by_slug($atts)
         'post_type' => 'services',
         'posts_per_page' => $limit,
         'paged' => $paged,
+        'orderby' => 'date',
+        'order' => 'ASC',
         'tax_query' => array(
             array(
                 'taxonomy' => 'categories_services',
