@@ -8,7 +8,14 @@ function shin_scripts()
     wp_enqueue_style('main-style-css', THEME_URL . '-child' . '/assets/dist/css/main.min.css', array(), $version, 'all');
 
     wp_enqueue_script('main-scripts-js', THEME_URL . '-child' . '/assets/dist/js/main.min.js', array('jquery'), $version, true);
+    // wp_enqueue_script('zippy-gift-cards',  'frontend-ajax.js', array('jquery'), null, true);
 
-    // Load Thirt-party
+    wp_localize_script('main-scripts-js', 'zippy', array(
+        'ajaxurl'                       => admin_url('admin-ajax.php', 'relative'),
+        'nonces' => array(
+            'zippy_add_amount'             => wp_create_nonce('pw-gift-cards-add-gift-card-amount'),
+        )
+    ));
+
+
 }
-
