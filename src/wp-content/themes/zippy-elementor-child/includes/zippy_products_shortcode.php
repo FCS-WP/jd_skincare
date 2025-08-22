@@ -306,9 +306,8 @@ function get_services_by_slug($atts)
         'contain' => 0,
         'exclude-current' => 'false',
         'paged' => 1,
-        'orderby' => 'date',
-        'order' => 'DESC',
     ), $atts, 'get_services_by_slug');
+
 
     $category_slug = sanitize_text_field($atts['category']);
     $limit = intval($atts['limit']);
@@ -325,8 +324,8 @@ function get_services_by_slug($atts)
         'post_type' => 'services',
         'posts_per_page' => $limit,
         'paged' => $paged,
-        'orderby' => $atts['orderby'],
-        'order' => $atts['order'],
+		'orderby' => 'date',
+        'order' => 'ASC',
         'tax_query' => array(
             array(
                 'taxonomy' => 'categories_services',
